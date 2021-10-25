@@ -53,8 +53,8 @@ func handleRequest(conn net.Conn, opFns []func(uint64, uint64) uint64) {
 	len2 := buf[2]
 
 	fmt.Println("Length of two operands ", len1, len2)
-	data1 := buf[3:3+len1]
-	data2 := buf[3+len1:reqLen]
+	data1 := buf[3 : 3+len1]
+	data2 := buf[3+len1 : reqLen]
 	// Varint decode the two operands
 	operand1, _ := binary.Uvarint(data1)
 	operand2, _ := binary.Uvarint(data2)
@@ -86,6 +86,5 @@ func multiply(a uint64, b uint64) uint64 {
 }
 
 func algebra(a uint64, b uint64) uint64 {
-	return  2 * a +  b
+	return 2*a + b
 }
-

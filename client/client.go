@@ -10,8 +10,8 @@ import (
 func CalculatorClient() {
 	data := []uint64{20, 127, 128, 256, 32768, 131072, 67108866, 1048576}
 	operator := []byte{0, 2, 3, 1}
-    index := 0
-	for i:=0; i < len(data); i+=2 {
+	index := 0
+	for i := 0; i < len(data); i += 2 {
 		c, err := net.Dial("tcp", "localhost:7070")
 		if err != nil {
 			fmt.Println(err)
@@ -21,7 +21,7 @@ func CalculatorClient() {
 
 		// First write the operator to the buffer
 		msgBuffer[0] = operator[index]
-		index+=1
+		index += 1
 
 		// Encode the two operands
 		data1 := encodeVarInt(data[i])
@@ -53,7 +53,7 @@ func CalculatorClient() {
 
 		// Decode the result with varint
 		answer, errata := binary.Uvarint(resultBuffer[0:len])
-		if errata  < 0 {
+		if errata < 0 {
 			fmt.Printf("Result did not get decoded correctly %v\n", errata)
 		}
 		fmt.Printf("Result from server: %v\n", answer)
@@ -62,7 +62,7 @@ func CalculatorClient() {
 
 }
 
-func encodeVarInt(data uint64) ([]byte) {
+func encodeVarInt(data uint64) []byte {
 	dataBuffer := make([]byte, 8)
 	len := binary.PutUvarint(dataBuffer, data)
 	fmt.Printf("%v encoded to length %v\n", data, len)
